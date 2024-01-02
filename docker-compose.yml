@@ -1,0 +1,30 @@
+version: '3.3'
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: management
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ganesh
+    volumes:
+      - /home/data:/var/lib/postgresql/data
+  transport:
+    image: transport
+    container_name: transport
+    ports:
+      - "9092:9092"
+    depends_on:
+      - postgres
+    volumes:
+      - /home/img:/home/img
+    labels:
+      collect_logs_with_filebeat: "true"
+      decode_log_event_to_json_object: "true"
+    environment:
+      spring.datasource.url: jdbc:postgresql://postgres/drone
+      spring.datasource.username: postgres
+      spring.datasource.password: ganesh

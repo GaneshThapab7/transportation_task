@@ -8,8 +8,7 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 public class GlobleException  extends Exception{
 
-private Object message;
+private Object error;
 private HttpStatus status;
-
 
 }

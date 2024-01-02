@@ -30,9 +30,10 @@ public class DeliveryEntity extends  BaseEntity{
     private Float distance;
     @Column(name = "end_time")
     private LocalDateTime endTime;
-    @OneToOne(mappedBy = "drone",
+    @OneToOne(
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
+    @JoinColumn(name = "drone_id", referencedColumnName = "id")
     private DroneEntity drone;
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
