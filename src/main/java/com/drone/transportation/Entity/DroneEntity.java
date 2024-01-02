@@ -5,6 +5,8 @@ import com.drone.transportation.enms.DroneStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Entity
 @Table(name = "drone")
 @Data
@@ -24,8 +26,12 @@ public class DroneEntity extends BaseEntity{
     private Float battery_capacity;
     @Column(name = "operational_speed")
     private Float operationalSpeed;
-
-
-
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "drone_log_link",
+            joinColumns = @JoinColumn(name = "drone_id"),
+            inverseJoinColumns = @JoinColumn(name = "drone_log_list_id"))
+    private List<DroneLogEntity> drone_log_list;
 
 }
