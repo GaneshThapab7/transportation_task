@@ -4,6 +4,8 @@ import com.drone.transportation.Exception.GlobleException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 
+import java.util.UUID;
+
 @AllArgsConstructor
 public enum DroneModel {
     Lightweight("light weight",100.05F),Middleweight("middle weight",200.00F),Cruiserweight("cruiser weight",250.00F),Heavyweight("heavy weight",500.00F);
@@ -21,7 +23,7 @@ public enum DroneModel {
                 return droneModel;
             }
         }
-        throw new GlobleException("Invalid Drone Module "+name, HttpStatus.BAD_REQUEST);
+        throw new GlobleException("Invalid Drone Module "+name, HttpStatus.BAD_REQUEST, UUID.randomUUID().toString());
     }
 
 }

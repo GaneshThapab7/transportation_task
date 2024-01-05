@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
@@ -26,7 +27,7 @@ public class ControllerAdvice {
     public ResponseEntity<GlobleException> handleValidationErrors(MethodArgumentNotValidException ex) {
         List<String> errors = ex.getBindingResult().getFieldErrors()
                 .stream().map(FieldError::getDefaultMessage).collect(Collectors.toList());
-        GlobleException globleException=new GlobleException(errors,HttpStatus.BAD_REQUEST);
+        GlobleException globleException=new GlobleException(errors,HttpStatus.BAD_REQUEST, UUID.randomUUID().toString());
         return new ResponseEntity<>(globleException, HttpStatus.BAD_REQUEST);
     }
 

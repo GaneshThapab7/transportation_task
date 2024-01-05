@@ -1,18 +1,17 @@
-version: '3.3'
+version: '3.7'
 services:
   postgres:
     image: postgres:latest
-    container_name: postgres
+    container_name: postgres_drone
     restart: unless-stopped
     ports:
-      - "5432:5432"
+      - "5433:5432"
     environment:
-      POSTGRES_DB: management
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: ganesh
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - /home/data:/var/lib/postgresql/data
+      - ./init-schema.sql:/docker-entrypoint-initdb.d/init-schema.sql
 
   transport:
     build:
@@ -22,15 +21,10 @@ services:
     container_name: transport
     ports:
       - "9092:9092"
-    depends_on:
-      - postgres
+    links:
+      - postgres:postgres
     volumes:
       - transport_data:/home/img
-      - /home/img:/home/img
-
-    labels:
-      collect_logs_with_filebeat: "true"
-      decode_log_event_to_json_object: "true"
     environment:
       spring.datasource.url: jdbc:postgresql://postgres/drone
       spring.datasource.username: postgres

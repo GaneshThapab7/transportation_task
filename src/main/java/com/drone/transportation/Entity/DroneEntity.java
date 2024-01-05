@@ -3,6 +3,7 @@ package com.drone.transportation.Entity;
 import com.drone.transportation.enms.DroneModel;
 import com.drone.transportation.enms.DroneStatus;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
@@ -11,6 +12,7 @@ import java.util.List;
 @Entity
 @Table(name = "drone")
 @Data
+@AllArgsConstructor
 @Builder
 public class DroneEntity extends BaseEntity{
     @Id

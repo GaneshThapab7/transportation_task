@@ -3,6 +3,7 @@ package com.drone.transportation.Entity;
 
 import com.drone.transportation.enms.TransportStatus;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
@@ -12,6 +13,7 @@ import java.util.List;
 @Entity
 @Table(name = "delivery")
 @Data
+@AllArgsConstructor
 @Builder
 public class DeliveryEntity extends  BaseEntity{
     @Id

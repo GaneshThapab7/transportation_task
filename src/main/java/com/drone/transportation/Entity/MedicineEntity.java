@@ -1,12 +1,14 @@
 package com.drone.transportation.Entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
 @Entity
 @Table(name = "medicine")
 @Data
+@AllArgsConstructor
 @Builder
 public class MedicineEntity extends BaseEntity {
     @Id

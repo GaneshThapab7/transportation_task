@@ -3,12 +3,16 @@ package com.drone.transportation.Entity;
 
 import com.drone.transportation.enms.DroneStatus;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
+
 
 @Entity
 @Table(name = "drone_log")
+
 @Data
-public class DroneLogEntity extends BaseEntity{
+@Builder
+public class DroneLogEntity extends BaseEntity {
     @Id
     @GeneratedValue
     private Long id;
@@ -17,4 +21,14 @@ public class DroneLogEntity extends BaseEntity{
     @Column(name = "battery_capacity")
     private Float battery_capacity;
 
+    public DroneLogEntity(Long id, DroneStatus status, Float weight) {
+        this.id = id;
+        this.droneStatus = status;
+        this.battery_capacity = weight;
+    }
+
+
+    public DroneLogEntity() {
+
+    }
 }

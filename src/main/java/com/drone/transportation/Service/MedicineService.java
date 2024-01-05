@@ -8,7 +8,7 @@ import com.drone.transportation.Exception.GlobleException;
 import com.drone.transportation.Interface.MedicineInterface;
 import com.drone.transportation.Repo.MedicineRepo;
 import com.drone.transportation.Util.Mapper;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -21,15 +21,20 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @Service
-@AllArgsConstructor
 public class MedicineService implements MedicineInterface {
     private final MedicineRepo medicineRepo;
     @Value("${image.upload.directory}")
     private String uploadDirectory;
-    private Mapper mapper=new Mapper();
+
+    @Autowired
+    public MedicineService(MedicineRepo medicineRepo) {
+        this.medicineRepo = medicineRepo;
+    }
+
 
     @Override
     public ResponseDto saveMedicine(MedicineDto medicineDto, MultipartFile file, String txnId) throws GlobleException {
+        Mapper mapper=new Mapper();
         if(medicineRepo.countByName(medicineDto.getName())!=0){
             throw  new GlobleException("Medicine with name :"+medicineDto.getName()+" already exist !!", HttpStatus.BAD_REQUEST,txnId);
         }if(medicineRepo.countByCode(medicineDto.getCode())!=0){
