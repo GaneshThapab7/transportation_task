@@ -10,5 +10,6 @@ public class GlobleException  extends Exception{
 
 private Object error;
 private HttpStatus status;
+private String txnId;
 
 }

@@ -3,6 +3,7 @@ package com.drone.transportation.Entity;
 
 import com.drone.transportation.enms.TransportStatus;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -11,11 +12,13 @@ import java.util.List;
 @Entity
 @Table(name = "delivery")
 @Data
+@Builder
 public class DeliveryEntity extends  BaseEntity{
     @Id
     @GeneratedValue
     private Long id;
-
+    @Column(name = "delivery_iD")
+    private String deliveryID;
     @Enumerated(EnumType.STRING)
     private TransportStatus transportStatus;
     @Column(name = "estimated_uration")
@@ -33,7 +36,7 @@ public class DeliveryEntity extends  BaseEntity{
     @OneToOne(
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
-    @JoinColumn(name = "drone_id", referencedColumnName = "id")
+    @JoinColumn(name = "drone_id", referencedColumnName = "serial_number")
     private DroneEntity drone;
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
@@ -43,6 +46,9 @@ public class DeliveryEntity extends  BaseEntity{
             inverseJoinColumns = @JoinColumn(name = "medicine_id"))
     private List<MedicineEntity> medicineList;
 
+    public DeliveryEntity() {
+
+    }
 
 
     public void getEstimateTime(){

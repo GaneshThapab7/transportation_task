@@ -11,8 +11,13 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: ganesh
     volumes:
+      - postgres_data:/var/lib/postgresql/data
       - /home/data:/var/lib/postgresql/data
+
   transport:
+    build:
+      context: .
+      dockerfile: Dockerfile
     image: transport
     container_name: transport
     ports:
@@ -20,7 +25,9 @@ services:
     depends_on:
       - postgres
     volumes:
+      - transport_data:/home/img
       - /home/img:/home/img
+
     labels:
       collect_logs_with_filebeat: "true"
       decode_log_event_to_json_object: "true"
@@ -28,3 +35,7 @@ services:
       spring.datasource.url: jdbc:postgresql://postgres/drone
       spring.datasource.username: postgres
       spring.datasource.password: ganesh
+
+volumes:
+  postgres_data:
+  transport_data:
